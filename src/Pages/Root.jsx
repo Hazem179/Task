@@ -29,6 +29,7 @@ export default function Root() {
         .get("http://localhost:5000/tasks")
         .then((response) => {
           setData(response.data);
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);
