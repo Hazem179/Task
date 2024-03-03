@@ -28,6 +28,7 @@ import {
 } from "@mui/material";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import { Link } from "react-router-dom";
+import MButton from "../Components/MButton";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -73,15 +74,12 @@ export default function Home() {
   return (
     <>
       <Box sx={{ width: "100%", marginTop: 2 }} bgcolor={"background.paper"}>
-        <Link to="/add" style={{    textDecoration : 'none' }}>
-          <Button
-            sx={{ marginLeft: "auto", display: "block", marginRight: 2 }}
-            variant="contained"
+        <Link to="/add" style={{ textDecoration: "none" }}>
+          <MButton
             color="error"
-            placment="left"
-          >
-            Add
-          </Button>
+            label="Add"
+            sx={{ marginLeft: "auto", display: "block", marginRight: 2 }}
+          />
         </Link>
       </Box>
       <Box sx={{ width: "100%", marginTop: 2 }}>
@@ -182,26 +180,20 @@ export default function Home() {
                   xs={12}
                   sx={{ display: "flex", justifyContent: "flex-end" }}
                 >
-                  <Button sx={{}} variant="contained" color="error">
-                    Advanced
-                  </Button>
-                  <Button
+                  <MButton color="error" label="Advanced" type="submit" />
+                  <MButton
+                    color="error"
+                    label="Search"
+                    type="submit"
                     sx={{
                       mx: 1,
                     }}
-                    variant="contained"
+                  />
+                  <MButton
                     color="error"
-                    type="submit"
-                  >
-                    Search
-                  </Button>
-                  <Button
+                    label="Reset"
                     onClick={() => hanldeReset()}
-                    variant="contained"
-                    color="error"
-                  >
-                    Reset
-                  </Button>
+                  />
                 </Grid>
               </Grid>
             </form>

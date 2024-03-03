@@ -17,6 +17,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm, Controller } from "react-hook-form";
 import { Link } from "react-router-dom";
+import MButton from "../Components/MButton";
+
 export default function Add() {
   const {
     control,
@@ -51,16 +53,13 @@ export default function Add() {
   };
   return (
     <>
-          <Box sx={{ width: "100%", marginTop: 2 }} bgcolor={"background.paper"}>
-        <Link to="/" style={{    textDecoration : 'none' }}>
-          <Button
-            sx={{ marginLeft: "auto", display: "block", marginRight: 2 }}
-            variant="contained"
+      <Box sx={{ width: "100%", marginTop: 2 }} bgcolor={"background.paper"}>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <MButton
+            label="Back"
             color="error"
-            placment="left"
-          >
-            Back
-          </Button>
+            sx={{ marginLeft: "auto", display: "block", marginRight: 2 }}
+          />
         </Link>
       </Box>
       <Box sx={{ width: "100%", marginTop: 2 }}>
@@ -235,30 +234,26 @@ export default function Add() {
                   xs={12}
                   sx={{ display: "flex", justifyContent: "flex-end" }}
                 >
-                  <Button
+                  <MButton
+                    color="primary"
+                    label="Add"
+                    type="submit"
                     sx={{
                       mx: 1,
                     }}
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                  >
-                    Add
-                  </Button>
-                  <Button
-                    variant="contained"
+                  />
+                  <MButton
                     color="error"
+                    label="Reset"
                     onClick={() => reset()}
-                  >
-                    Reset
-                  </Button>
+                  />
                 </Grid>
               </Grid>
             </form>
           </CardContent>
         </Card>
       </Box>
-      <ToastContainer/>
+      <ToastContainer />
     </>
   );
 }
