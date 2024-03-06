@@ -37,7 +37,6 @@ export default function Update() {
       });
   };
   const updateTaskData = async (updatedData) => {
-    console.log(updatedData);
     try {
       const response = await axios.put(`http://localhost:5000/tasks/${id}`, updatedData);
       console.log("Data updated successfully", response.data);
@@ -112,7 +111,7 @@ export default function Update() {
                       <FormControl fullWidth>
                         <Controller
                           name="avatar"
-                          rules={{ required: "يرجى إدخال رقم الطلب" }}
+                          rules={{ required: "يرجى إدخال الحرف الاول من اسم المستخدم" }}
                           control={control}
                           render={({ field }) => (
                             <TextField

@@ -29,6 +29,7 @@ import {
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 import MButton from "../Components/MButton";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -70,6 +71,27 @@ export default function Home() {
   };
   const hanldeReset = () => {
     loadUserData();
+  };
+  const notify = () =>
+    toast.success("تم الحذف بنجاح", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(`http://localhost:5000/tasks/${id}`);
+      notify();
+      loadUserData();
+    } catch (error) {
+      // Handle error
+      console.error("Error updating data", error);
+    }
   };
   return (
     <>
@@ -226,9 +248,18 @@ export default function Home() {
                     <TableCell>{task.status}</TableCell>
                     <TableCell>{task.requester}</TableCell>
                     <TableCell>
-                      <Link to={"update/" + task.id} style={{ textDecoration: "none" }}>
+                      <Link
+                        to={"update/" + task.id}
+                        style={{ textDecoration: "none" }}
+                      >
                         <MButton label="Update" color="success" />
                       </Link>
+                      <MButton
+                        label="Delete"
+                        color="error"
+                        onClick={() => handleDelete(task.id)}
+                        sx={{ mx: 1 }}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}
@@ -237,6 +268,7 @@ export default function Home() {
           </TableContainer>
         </Card>
       </Box>
+      <ToastContainer />
     </>
   );
 }

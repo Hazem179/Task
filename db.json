@@ -1,44 +1,12 @@
 {
   "tasks": [
     {
-      "status": "Pending",
-      "category": "Tech",
-      "requester": "Ahmed",
-      "sr_number": "SR-1",
-      "avatar": "A",
-      "id": "a503"
-    },
-    {
-      "avatar": "T",
-      "sr_number": "SR24-000322",
-      "category": "Technical",
-      "status": "Pending",
-      "requester": "Ahmed Rezk",
-      "id": "7faf"
-    },
-    {
-      "avatar": "H",
-      "sr_number": "SR24-000323",
-      "category": "HR",
-      "status": "Closed",
-      "requester": "Ali Ahmed",
-      "id": "4d79"
-    },
-    {
       "avatar": "M",
       "sr_number": "SR24-000324",
       "category": "Social",
       "status": "Assigned",
       "requester": "Emad Elshirbiny",
       "id": "5e99"
-    },
-    {
-      "avatar": "T",
-      "sr_number": "SR24-000325",
-      "category": "Technical",
-      "status": "Pending",
-      "requester": "Ahmed Rezk",
-      "id": "8d4f"
     },
     {
       "status": "Pending",
@@ -63,22 +31,6 @@
       "status": "Pending",
       "requester": "Ahmed Rezk",
       "id": "f07d"
-    },
-    {
-      "avatar": "H",
-      "sr_number": "SR24-000329",
-      "category": "HR",
-      "status": "Closed",
-      "requester": "Ali Ahmed",
-      "id": "375e"
-    },
-    {
-      "avatar": "M",
-      "sr_number": "SR24-000330",
-      "category": "Social",
-      "status": "Assigned",
-      "requester": "Emad Elshirbiny",
-      "id": "a22a"
     }
   ]
 }
