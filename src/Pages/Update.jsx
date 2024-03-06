@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Box,
   Card,
@@ -15,10 +17,24 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm, Controller } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import MButton from "../Components/MButton";
 
-export default function Add() {
+export default function Update() {
+  let { id } = useParams();
+  const [data, setData] = useState([]);
+  const loadUserData = async () => {
+    return await axios
+      .get("http://localhost:5000/tasks/"+ id)
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+      });
+  };
+  useEffect(() => {
+    loadUserData();
+  }, []);
   const {
     control,
     handleSubmit,
@@ -27,12 +43,12 @@ export default function Add() {
   } = useForm({
     mode: "onTouched",
     defaultValues: {
-      subCategory: "",
-      priority: "",
+      status: "",
       category: "",
       agent: "",
       requester: "",
       srNumber: "",
+      avatar: "",
     },
   });
   const notify = () =>
@@ -65,7 +81,7 @@ export default function Add() {
         <Card sx={{ marginRight: 2, marginLeft: 2 }}>
           <CardContent>
             <Typography variant="h5" component="div">
-              Add
+              Update
             </Typography>
             <Divider />
             <form onSubmit={handleSubmit(handleSave)}>
@@ -80,125 +96,22 @@ export default function Add() {
                     <Grid item xs={6}>
                       <FormControl fullWidth>
                         <Controller
-                          name="category"
+                          name="avatar"
+                          rules={{ required: "يرجى إدخال رقم الطلب" }}
                           control={control}
-                          rules={{ required: "يرجى إدخال التصنيف" }}
                           render={({ field }) => (
                             <TextField
                               id="outlined-basic"
-                              label="Category"
-                              error={errors?.category ? true : false}
-                              helperText={
-                                errors?.category?.message &&
-                                errors?.category?.message
-                              }
+                              label="Avatar"
                               variant="outlined"
                               sx={{ width: "75%" }}
-                              {...field}
-                            />
-                          )}
-                        />
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <FormControl fullWidth>
-                        <Controller
-                          name="agent"
-                          control={control}
-                          rules={{ required: "يرجى إدخال العميل" }}
-                          render={({ field }) => (
-                            <TextField
-                              id="outlined-basic"
-                              label="Agent"
-                              variant="outlined"
-                              sx={{ width: "75%" }}
-                              error={errors?.agent ? true : false}
+                              error={errors?.avatar ? true : false}
                               helperText={
-                                errors?.agent?.message && errors?.agent?.message
+                                errors?.avatar?.message &&
+                                errors?.avatar?.message
                               }
                               {...field}
                             />
-                          )}
-                        />
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">
-                          Sub Category
-                        </InputLabel>
-                        <Controller
-                          name="subCategory"
-                          control={control}
-                          rules={{ required: "يرجى إختيار التصنيف الفرعي" }}
-                          render={({ field }) => (
-                            <Select
-                              labelId="demo-simple-select-label"
-                              id="demo-simple-select-sub-category"
-                              label="Sub Category"
-                              sx={{ width: "75%" }}
-                              error={errors?.subCategory ? true : false}
-                              {...field}
-                            >
-                              <MenuItem value={"Web"}>Web</MenuItem>
-                              <MenuItem value={"Mobile"}>Mobile</MenuItem>
-                              <MenuItem value={"Desktop"}>Desktop</MenuItem>
-                            </Select>
-                          )}
-                        />
-                        {errors?.subCategory?.message && (
-                          <span
-                            style={{
-                              color: "#d32f2f",
-                              fontSize: "0.75rem",
-                              fontFamily: "Roboto",
-                              marginRight: "14px",
-                              marginLeft: "14px",
-                              marginTop: "3px",
-                            }}
-                          >
-                            {errors?.subCategory?.message}
-                          </span>
-                        )}
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <FormControl fullWidth>
-                        <Controller
-                          name="requester"
-                          control={control}
-                          render={({ field }) => (
-                            <TextField
-                              id="outlined-basic"
-                              label="Requester"
-                              variant="outlined"
-                              sx={{ width: "75%" }}
-                              {...field}
-                            />
-                          )}
-                        />
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">
-                          priority
-                        </InputLabel>
-                        <Controller
-                          name="priority"
-                          control={control}
-                          render={({ field }) => (
-                            <Select
-                              labelId="demo-simple-select-label"
-                              id="demo-simple-select-priority"
-                              label="Priority"
-                              sx={{ width: "75%" }}
-                              {...field}
-                            >
-                              <MenuItem value={"Low"}>Low</MenuItem>
-                              <MenuItem value={"Medium"}>Medium</MenuItem>
-                              <MenuItem value={"High"}>High</MenuItem>
-                            </Select>
                           )}
                         />
                       </FormControl>
@@ -226,6 +139,93 @@ export default function Add() {
                         />
                       </FormControl>
                     </Grid>
+                    <Grid item xs={6}>
+                      <FormControl fullWidth>
+                        <Controller
+                          name="category"
+                          control={control}
+                          rules={{ required: "يرجى إدخال التصنيف" }}
+                          render={({ field }) => (
+                            <TextField
+                              id="outlined-basic"
+                              label="Category"
+                              error={errors?.category ? true : false}
+                              helperText={
+                                errors?.category?.message &&
+                                errors?.category?.message
+                              }
+                              variant="outlined"
+                              sx={{ width: "75%" }}
+                              {...field}
+                            />
+                          )}
+                        />
+                      </FormControl>
+                    </Grid>
+
+                    <Grid item xs={6}>
+                      <FormControl fullWidth>
+                        <Controller
+                          name="agent"
+                          control={control}
+                          rules={{ required: "يرجى إدخال العميل" }}
+                          render={({ field }) => (
+                            <TextField
+                              id="outlined-basic"
+                              label="Agent"
+                              variant="outlined"
+                              sx={{ width: "75%" }}
+                              error={errors?.agent ? true : false}
+                              helperText={
+                                errors?.agent?.message && errors?.agent?.message
+                              }
+                              {...field}
+                            />
+                          )}
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <FormControl fullWidth>
+                        <Controller
+                          name="requester"
+                          control={control}
+                          render={({ field }) => (
+                            <TextField
+                              id="outlined-basic"
+                              label="Requester"
+                              variant="outlined"
+                              sx={{ width: "75%" }}
+                              {...field}
+                            />
+                          )}
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">
+                          status
+                        </InputLabel>
+                        <Controller
+                          name="status"
+                          control={control}
+                          render={({ field }) => (
+                            <Select
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select-status"
+                              label="Priority"
+                              sx={{ width: "75%" }}
+                              {...field}
+                            >
+                              <MenuItem value={"Assigned"}>Assigned</MenuItem>
+                              <MenuItem value={"Pending"}>Pending</MenuItem>
+                              <MenuItem value={"Closed"}>Closed</MenuItem>
+                            </Select>
+                          )}
+                        />
+                      </FormControl>
+                    </Grid>
                   </Grid>
                 </Container>
                 <Grid
@@ -235,16 +235,11 @@ export default function Add() {
                 >
                   <MButton
                     color="primary"
-                    label="Add"
+                    label="Update"
                     type="submit"
                     sx={{
                       mx: 1,
                     }}
-                  />
-                  <MButton
-                    color="error"
-                    label="Reset"
-                    onClick={() => reset()}
                   />
                 </Grid>
               </Grid>

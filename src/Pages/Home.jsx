@@ -209,6 +209,7 @@ export default function Home() {
                   <TableCell sx={{ fontWeight: "bold" }}>Category</TableCell>
                   <TableCell sx={{ fontWeight: "bold" }}>Status</TableCell>
                   <TableCell sx={{ fontWeight: "bold" }}>Requester</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>Options</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -224,6 +225,11 @@ export default function Home() {
                     <TableCell>{task.category}</TableCell>
                     <TableCell>{task.status}</TableCell>
                     <TableCell>{task.requester}</TableCell>
+                    <TableCell>
+                      <Link to={"update/" + task.id} style={{ textDecoration: "none" }}>
+                        <MButton label="Update" color="success" />
+                      </Link>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

@@ -8,6 +8,7 @@ import {
 import Root from './Pages/Root';
 import Add from './Pages/Add';
 import Home from './Pages/Home';
+import Update from "./Pages/Update";
 
 
 
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<Root />}>
       <Route index element={<Home/>} />
       <Route path="add" element={<Add/>} />
+      <Route path="update/:id" element = {<Update/>} />
     </Route>,
   )
 );

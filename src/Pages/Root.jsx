@@ -43,9 +43,6 @@ export default function Root() {
         )
         .then((response) => {
           setData(response.data);
-          setSrValue(srValue);
-          setrequesterValue(requesterValue);
-          setStatusValue(statusValue);
         })
         .catch((error) => {
           console.log(error);
