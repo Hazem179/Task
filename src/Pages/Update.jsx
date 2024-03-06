@@ -22,35 +22,49 @@ import MButton from "../Components/MButton";
 
 export default function Update() {
   let { id } = useParams();
-  const [data, setData] = useState([]);
-  const loadUserData = async () => {
+  const loadTaskData = async () => {
     return await axios
       .get("http://localhost:5000/tasks/"+ id)
       .then((response) => {
-        setData(response.data);
+        console.log(response.data);
+        setValue("category", response.data.category);
+        setValue("avatar", response.data.avatar);
+        setValue("status", response.data.status);
+        setValue("requester", response.data.requester);
+        setValue("sr_number", response.data.sr_number);
       })
       .catch((error) => {
       });
   };
-  useEffect(() => {
-    loadUserData();
-  }, []);
+  const updateTaskData = async (updatedData) => {
+    console.log(updatedData);
+    try {
+      const response = await axios.put(`http://localhost:5000/tasks/${id}`, updatedData);
+      console.log("Data updated successfully", response.data);
+    } catch (error) {
+      // Handle error
+      console.error("Error updating data", error);
+    }
+  };
+  
   const {
     control,
     handleSubmit,
-    reset,
     formState: { errors },
+    setValue,
   } = useForm({
     mode: "onTouched",
     defaultValues: {
       status: "",
       category: "",
-      agent: "",
       requester: "",
-      srNumber: "",
+      sr_number: "",
       avatar: "",
     },
   });
+  useEffect(() => {
+    loadTaskData();
+  }, []);
   const notify = () =>
     toast.success("تم حفظ البيانات بنجاح", {
       position: "top-center",
@@ -62,8 +76,9 @@ export default function Update() {
       progress: undefined,
       theme: "light",
     });
-  const handleSave = (e) => {
-    reset();
+
+  const handleUpdate = (e) => {
+    updateTaskData(e);
     notify();
   };
   return (
@@ -84,7 +99,7 @@ export default function Update() {
               Update
             </Typography>
             <Divider />
-            <form onSubmit={handleSubmit(handleSave)}>
+            <form onSubmit={handleSubmit(handleUpdate)}>
               <Grid container spacing={2}>
                 <Container maxWidth="xl" sx={{ marginTop: 2 }}>
                   <Grid
@@ -119,7 +134,7 @@ export default function Update() {
                     <Grid item xs={6}>
                       <FormControl fullWidth>
                         <Controller
-                          name="srNumber"
+                          name="sr_number"
                           rules={{ required: "يرجى إدخال رقم الطلب" }}
                           control={control}
                           render={({ field }) => (
@@ -128,10 +143,10 @@ export default function Update() {
                               label="SR Number"
                               variant="outlined"
                               sx={{ width: "75%" }}
-                              error={errors?.srNumber ? true : false}
+                              error={errors?.sr_number ? true : false}
                               helperText={
-                                errors?.srNumber?.message &&
-                                errors?.srNumber?.message
+                                errors?.sr_number?.message &&
+                                errors?.sr_number?.message
                               }
                               {...field}
                             />
@@ -166,28 +181,6 @@ export default function Update() {
                     <Grid item xs={6}>
                       <FormControl fullWidth>
                         <Controller
-                          name="agent"
-                          control={control}
-                          rules={{ required: "يرجى إدخال العميل" }}
-                          render={({ field }) => (
-                            <TextField
-                              id="outlined-basic"
-                              label="Agent"
-                              variant="outlined"
-                              sx={{ width: "75%" }}
-                              error={errors?.agent ? true : false}
-                              helperText={
-                                errors?.agent?.message && errors?.agent?.message
-                              }
-                              {...field}
-                            />
-                          )}
-                        />
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <FormControl fullWidth>
-                        <Controller
                           name="requester"
                           control={control}
                           render={({ field }) => (
@@ -202,7 +195,7 @@ export default function Update() {
                         />
                       </FormControl>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                       <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">
                           status
@@ -215,7 +208,7 @@ export default function Update() {
                               labelId="demo-simple-select-label"
                               id="demo-simple-select-status"
                               label="Priority"
-                              sx={{ width: "75%" }}
+                              sx={{ width: "88%" }}
                               {...field}
                             >
                               <MenuItem value={"Assigned"}>Assigned</MenuItem>
